@@ -14,6 +14,8 @@ class Offering(
     val productId: String,
     val subscriptionPeriod: String?
 ){
+    val productNameUpperCase: String
+        get() = this.productName.uppercase()
     val price: String
         get() = this.purchaseOption.pricingPhases.last().formattedPrice
     val formattedPeriod: String
@@ -46,6 +48,7 @@ class PaywallRecyclerViewAdapter(
         val item = values[position]
         holder.priceView.text = item.price
         holder.durationView.text = item.formattedPeriod
+        holder.productView.text = item.productNameUpperCase
     }
 
     override fun getItemCount(): Int = values.size
@@ -53,9 +56,10 @@ class PaywallRecyclerViewAdapter(
     inner class ViewHolder(binding: PaywallItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val priceView: TextView = binding.price
         val durationView: TextView = binding.duration
+        val productView: TextView = binding.product
 
         override fun toString(): String {
-            return super.toString() + " '" + durationView.text + " '" + priceView.text
+            return super.toString() + " '" + productView.text+ " '" + durationView.text + " '" + priceView.text
         }
     }
 

@@ -9,8 +9,8 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        card_view:cardBackgroundColor="@color/cardview_shadow_start_color"
+        android:layout_height="180dp"
+        card_view:cardBackgroundColor="@color/purple_200"
         card_view:cardCornerRadius="0dp"
         card_view:cardElevation="10dp"
         card_view:cardMaxElevation="10dp"
@@ -24,9 +24,26 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="@dimen/text_margin"
+                android:layout_weight="1"
+                android:text="TextView"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:textAlignment="center"
+                tools:text="gold" />
+
+            <TextView
                 android:id="@+id/duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/product"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="10dp"
