@@ -1,22 +1,16 @@
 package com.mcastany.samplebc5
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mcastany.samplebc5.databinding.PaywallItemBinding
-import com.revenuecat.purchases.Purchases
-import com.revenuecat.purchases.Store
-import com.revenuecat.purchases.models.GooglePurchaseOption
 import com.revenuecat.purchases.models.PurchaseOption
 import com.revenuecat.purchases.models.StoreProduct
 import com.revenuecat.purchases.Package
-import com.revenuecat.purchases.purchasePackageOptionWith
 
 class Offering {
-    private var product: StoreProduct
+    public var product: StoreProduct
     public val purchaseOption: PurchaseOption?
     public val rcpackage: Package
 
@@ -41,7 +35,8 @@ class Offering {
 }
 
 class PaywallRecyclerViewAdapter(
-    private val values: List<Offering>
+    private val values: List<Offering>,
+    private val clickHandler: (product: StoreProduct, purchaseOption: PurchaseOption) -> Unit
 ) : RecyclerView.Adapter<PaywallRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -62,15 +57,11 @@ class PaywallRecyclerViewAdapter(
         holder.durationView.text = item.formattedPeriod
         holder.productView.text = item.productNameUpperCase
         holder.button.setOnClickListener{
-            clickHandler(item)
+            clickHandler(item.product, item.purchaseOption!!)
         }
     }
 
-    fun clickHandler(item: Offering){
-        Log.i("info", String.format("Purchased Package %s at %s", item.productNameUpperCase, item.price))
-    }
-
-   override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: PaywallItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val priceView: TextView = binding.price
