@@ -1,6 +1,9 @@
 package com.mcastany.samplebc5
 
+import android.opengl.Visibility
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +35,10 @@ class Offering {
                 "NA"
             }
         }
+    val freeTrial: Boolean
+        get() = this.purchaseOption?.pricingPhases?.get(0)?.priceAmountMicros === 0L
+    val freeTrialDuration: String
+        get() = this.purchaseOption?.pricingPhases?.get(0)?.billingPeriod!!
 }
 
 class PaywallRecyclerViewAdapter(
@@ -56,6 +63,12 @@ class PaywallRecyclerViewAdapter(
         holder.priceView.text = item.price
         holder.durationView.text = item.formattedPeriod
         holder.productView.text = item.productNameUpperCase
+
+        if (!item.freeTrial){
+            holder.freeTrial.visibility = View.INVISIBLE
+        } else
+            holder.freeTrial.visibility = View.VISIBLE
+
         holder.button.setOnClickListener{
             clickHandler(item.product, item.purchaseOption!!)
         }
@@ -68,6 +81,7 @@ class PaywallRecyclerViewAdapter(
         val durationView: TextView = binding.duration
         val productView: TextView = binding.product
         val button: TextView = binding.button
+        val freeTrial: TextView = binding.freetrial
 
         override fun toString(): String {
             return super.toString() + " '" + productView.text+ " '" + durationView.text + " '" + priceView.text

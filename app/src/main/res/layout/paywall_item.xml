@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="220dp"
         card_view:cardBackgroundColor="@color/purple_200"
         card_view:cardCornerRadius="0dp"
         card_view:cardElevation="10dp"
@@ -68,11 +68,26 @@
                 android:textAlignment="center"
                 tools:text="$1" />
 
+            <TextView
+                android:id="@+id/freetrial"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/price"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:inputType="number"
+                android:text="Free Trial Available"
+                android:textAlignment="center"
+                android:textColor="@color/material_on_surface_emphasis_high_type"
+                tools:text="Free trial" />
+
             <Button
                 android:id="@+id/button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/price"
+                android:layout_below="@+id/freetrial"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
