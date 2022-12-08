@@ -1,25 +1,37 @@
 package com.mcastany.samplebc5
 
-import androidx.recyclerview.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
+import androidx.recyclerview.widget.RecyclerView
 import com.mcastany.samplebc5.databinding.PaywallItemBinding
+import com.revenuecat.purchases.Purchases
+import com.revenuecat.purchases.Store
+import com.revenuecat.purchases.models.GooglePurchaseOption
 import com.revenuecat.purchases.models.PurchaseOption
+import com.revenuecat.purchases.models.StoreProduct
+import com.revenuecat.purchases.Package
+import com.revenuecat.purchases.purchasePackageOptionWith
 
-class Offering(
-    val productName: String,
-    val purchaseOption: PurchaseOption,
-    val productId: String,
-    val subscriptionPeriod: String?
-){
+class Offering {
+    private var product: StoreProduct
+    public val purchaseOption: PurchaseOption?
+    public val rcpackage: Package
+
+    constructor(rcPackage: Package) {
+        this.purchaseOption = rcPackage.product.purchaseOptions.get(0)
+        this.product = rcPackage.product
+        this.rcpackage = rcPackage
+    }
+
     val productNameUpperCase: String
-        get() = this.productName.uppercase()
+        get() = this.product.productId.uppercase()
     val price: String
-        get() = this.purchaseOption.pricingPhases.last().formattedPrice
+        get() = this.purchaseOption?.pricingPhases?.last()?.formattedPrice!!
     val formattedPeriod: String
-        get() = when (this.subscriptionPeriod) {
+        get() = when (this.product.subscriptionPeriod) {
             "P1M" -> "MONTHLY"
             "P1Y" -> "YEARLY"
             else -> {
@@ -49,14 +61,22 @@ class PaywallRecyclerViewAdapter(
         holder.priceView.text = item.price
         holder.durationView.text = item.formattedPeriod
         holder.productView.text = item.productNameUpperCase
+        holder.button.setOnClickListener{
+            clickHandler(item)
+        }
     }
 
-    override fun getItemCount(): Int = values.size
+    fun clickHandler(item: Offering){
+        Log.i("info", String.format("Purchased Package %s at %s", item.productNameUpperCase, item.price))
+    }
+
+   override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: PaywallItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val priceView: TextView = binding.price
         val durationView: TextView = binding.duration
         val productView: TextView = binding.product
+        val button: TextView = binding.button
 
         override fun toString(): String {
             return super.toString() + " '" + productView.text+ " '" + durationView.text + " '" + priceView.text

@@ -39,12 +39,7 @@ class PaywallFragment : Fragment() {
 
     private fun populateOfferings(offerings: Offerings) {
         val list = offerings.current?.availablePackages?.map {
-            Offering(
-                it.product.productId,
-                it.product.purchaseOptions.get(0),
-                it.product.description,
-                it.product.subscriptionPeriod,
-            )
+            Offering(it)
         }
         recyclerView.adapter = list?.let { PaywallRecyclerViewAdapter(it) }!!
     }
